@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Mendhkiiii 🥺❤️</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      width: 100%;
+      max-width: 450px;
+      border-radius: 25px;
+      padding: 25px;
+      box-shadow: 0 15px 35px rgba(238, 156, 167, 0.4);
+      text-align: center;
+      position: relative;
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .card.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1, h2 { font-family: 'Fredoka One', cursive; color: #ff4757; margin-bottom: 15px; }
+    p { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 15px; }
+
+    /* Page 1 Styles */
+    .teddy-container { width: 120px; height: 120px; margin: 0 auto 10px; }
+    .teddy-svg { width: 100%; height: 100%; }
+    .photo-frame {
+      width: 160px;
+      height: 200px;
+      margin: 15px auto;
+      border: 4px solid #ff4757;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
+      animation: pulse 2s infinite;
+    }
+    .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+
+    .promise-box {
+      background: #fff0f3;
+      border: 2px dashed #ff6b81;
+      border-radius: 12px;
+      padding: 12px;
+      margin: 15px 0;
+      text-align: left;
+    }
+    .promise-item { font-size: 13px; margin: 6px 0; display: flex; align-items: center; }
+    .promise-item input { margin-right: 8px; transform: scale(1.2); }
+
+    /* Buttons */
+    .btn {
+      background: #ff4757;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    .btn:hover { transform: scale(1.05); background: #ff6b81; }
+
+    /* Page 2 Password */
+    .pwd-input {
+      width: 80%;
+      padding: 12px;
+      border: 2px solid #ff6b81;
+      border-radius: 20px;
+      text-align: center;
+      font-size: 16px;
+      outline: none;
+      margin-bottom: 10px;
+    }
+    .hint { font-size: 12px; color: #888; font-style: italic; }
+
+    /* Page 3 Styles */
+    .gif-box { width: 180px; margin: 0 auto 15px; border-radius: 15px; overflow: hidden; }
+    .gif-box img { width: 100%; display: block; }
+    .hidden-letter {
+      display: none;
+      background: #fff5f6;
+      border: 2px solid #ff4757;
+      border-radius: 15px;
+      padding: 15px;
+      margin-top: 15px;
+      text-align: left;
+      font-size: 13px;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    /* Floating Sad Emojis Effect */
+    .sad-emoji {
+      position: absolute;
+      font-size: 20px;
+      animation: floatUp 4s linear infinite;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100%) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-500%) rotate(360deg); opacity: 0; }
+    }
+
+    /* Page 4 Styles */
+    .sticker { position: absolute; font-size: 24px; pointer-events: none; }
+    .sticker.top-left { top: 10px; left: 10px; }
+    .sticker.top-right { top: 10px; right: 10px; }
+    .sticker.bottom-left { bottom: 10px; left: 10px; }
+    .sticker.bottom-right { bottom: 10px; right: 10px; }
+
+    .reasons-list {
+      display: none;
+      text-align: left;
+      background: #fff0f3;
+      padding: 15px;
+      border-radius: 15px;
+      margin-top: 15px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    .reasons-list li { font-size: 13px; margin-bottom: 8px; list-style-type: none; }
+
+    .emoji-bar { font-size: 16px; margin: 10px 0; word-wrap: break-word; }
+
+    /* Page 5 Final */
+    .follower-badge {
+      background: #ff4757;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1: Home Screen -->
+  <div class="card active" id="page1">
+    <h1>Sorry Mendhkiiii 🥺🐸</h1>
+    
+    <div class="teddy-container">
+      <svg class="teddy-svg" viewBox="0 0 100 100">
+        <circle cx="50" cy="55" r="30" fill="#d4a373"/>
+        <circle cx="30" cy="30" r="12" fill="#d4a373"/>
+        <circle cx="70" cy="30" r="12" fill="#d4a373"/>
+        <circle cx="40" cy="50" r="4" fill="#333"/>
+        <circle cx="60" cy="50" r="4" fill="#333"/>
+        <ellipse cx="50" cy="62" rx="6" ry="4" fill="#c38e70"/>
+        <path d="M 45 70 Q 50 65 55 70" stroke="#333" stroke-width="2" fill="none"/>
+        <path d="M 38 52 Q 35 65 35 75" stroke="#00b4d8" stroke-width="3" fill="none"/>
+        <path d="M 62 52 Q 65 65 65 75" stroke="#00b4d8" stroke-width="3" fill="none"/>
+      </svg>
+    </div>
+
+    <p>Aanya, tumhari daant aur tumhara pyaar hi mera iklota nasha hai! Ab gussa chhod do na Bbu? 💔</p>
+
+    <div class="photo-frame">
+      <img src="photo.jpg" alt="Mendhkiiii Photo">
+    </div>
+
+    <div class="promise-box">
+      <div class="promise-item">
+        <input type="checkbox" id="c1">
+        <label for="c1">Aaj ke baad kabhi nashe ki baat nahi karunga</label>
+      </div>
+      <div class="promise-item">
+        <input type="checkbox" id="c2">
+        <label for="c2">Mendhkiiii ki saari baatein dhyan se sununga</label>
+      </div>
+    </div>
+
+    <button class="btn" onclick="nextPage(2)">Go to Next Page ➡️</button>
+  </div>
+
+  <!-- PAGE 2: Password Lock -->
+  <div class="card" id="page2">
+    <h2>Secret Lock Screen 🔒</h2>
+    <p>Aage badhne ke liye password enter karo:</p>
+    
+    <input type="password" id="pwdInput" class="pwd-input" placeholder="Enter Password...">
+    <div class="hint">Hint: Open it my bbu, you know that my password is your nickname.</div>
+    <br>
+    <button class="btn" onclick="checkPassword()">Unlock Page 🔓</button>
+  </div>
+
+  <!-- PAGE 3: Apology Letter -->
+  <div class="card" id="page3">
+    <!-- Floating Sad Emojis -->
+    <div class="sad-emoji" style="left:10%; animation-delay:0s;">🥺</div>
+    <div class="sad-emoji" style="left:30%; animation-delay:1s;">😭</div>
+    <div class="sad-emoji" style="left:70%; animation-delay:2s;">💔</div>
+    <div class="sad-emoji" style="left:85%; animation-delay:1.5s;">😔</div>
+
+    <div class="gif-box">
+      <!-- Apology GIF -->
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2eHkxejlnNWV4MnRzbzQydXR2M201d3BvZm9tdnJuaXJubSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L9543X258567G/giphy.gif" alt="Sorry GIF">
+    </div>
+
+    <p style="font-weight:bold; color:#ff4757;">I am so sorry Bbu 🥺💔</p>
+
+    <button class="btn" onclick="toggleElement('apologyLetter')">🎁 Open Surprise Box</button>
+
+    <div class="hidden-letter" id="apologyLetter">
+      <p><b>Please forgive me my bbu Please 🥺😩</b></p>
+      <p>I don't know, but if someone else is angry, it doesn't matter to me, but please don't get angry with me 😔 me I promise I will never talk nonsense like this, I will not mention drugs and don't keep telling me , "ja na , block kr dunga, baat mt kr ja , "ja na, block kr dunga, baat mt kr ja" I feel bad that you say all this. Mujhe maaf kr dijiye plsss 🙏🏻</p>
+      <br>
+      <p><b>Meri mendhkiiiii 🥺❤️</b><br>
+      Please truly forgive me for what I said. I shouldn’t have spoken to you that way, and I should have been more considerate of your feelings. I never intended to hurt you, but I understand that my words caused you pain, and I’m genuinely sorry from the bottom of my heart. From now on, I’ll be more careful with what I say. Your feelings and dignity mean so much to me, and I never want you to feel hurt because of me. I’m deeply sorry. ❤️🫶🏻</p>
+      <br>
+      <p><i>You can talk even when you are angry, you can fight but please talk. ✨</i></p>
+    </div>
+
+    <br>
+    <button class="btn" style="margin-top:15px;" onclick="nextPage(4)">Next Page ➡️</button>
+  </div>
+
+  <!-- PAGE 4: What I Like About You -->
+  <div class="card" id="page4">
+    <!-- Corner Stickers -->
+    <div class="sticker top-left">💖</div>
+    <div class="sticker top-right">🧸</div>
+    <div class="sticker bottom-left">🌸</div>
+    <div class="sticker bottom-right">💌</div>
+
+    <div class="gif-box">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2k0bnV3MXU4dzR3Nnc2eGN3aWVqZnRmbnA3OHJvcms2bnB3Y244YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kZqbBT64ECtjy/giphy.gif" alt="I Miss U GIF">
+    </div>
+
+    <h2>You know what I like about you? ✨</h2>
+
+    <div style="position:relative; min-height:50px; margin:10px 0;">
+      <button class="btn" onclick="toggleElement('reasonsList')">YES ❤️</button>
+      <button class="btn" id="noBtn" style="background:#888; position:absolute; right:30px;" onmouseover="moveNoBtn()" onclick="moveNoBtn()">NO 😜</button>
+    </div>
+
+    <div class="reasons-list" id="reasonsList">
+      <ul>
+        <li>1. I don't like you, you are angry with me 🥺</li>
+        <li>2. Your tantrums 😤</li>
+        <li>3. Your sweet words 🍬</li>
+        <li>4. Your smile 😊</li>
+        <li>5. Your voice 🎧</li>
+        <li>6. Your cute little anger 😡✨</li>
+        <li>7. The way you call me “mendhkkk” 🐸</li>
+        <li>8. The way you talk 🗣️</li>
+        <li>9. Your caring nature 🫂</li>
+        <li>10. Your little silly habits 😜</li>
+        <li>11. Your personality 🌟</li>
+        <li>12. How happy I feel when I talk to you 🥰</li>
+      </ul>
+    </div>
+
+    <div class="emoji-bar">
+      ❤️🧡💛💚🩵💙💜🤎🖤🩶🩷💘💝💖💗💓💞💕💌💟♥️❣️🫶🏻😊
+    </div>
+
+    <button class="btn" onclick="nextPage(5)">Final Page ➡️</button>
+  </div>
+
+  <!-- PAGE 5: Final Celebration -->
+  <div class="card" id="page5">
+    <div class="follower-badge">👑 #1 Favorite Person</div>
+    
+    <div class="photo-frame" style="width:180px; height:230px;">
+      <img src="photo.jpg" alt="Aanya Photo">
+    </div>
+
+    <h2>Ab maaan bhi jaoo me to apka Bbu hu na 😩😔</h2>
+
+    <button class="btn" onclick="triggerConfetti()">Haan, Maaf Kiya! 🎉❤️</button>
+  </div>
+
+  <script>
+    // Page Navigation
+    function nextPage(pageNum) {
+      document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+      document.getElementById('page' + pageNum).classList.add('active');
+    }
+
+    // Toggle Box Visibility
+    function toggleElement(id) {
+      const el = document.getElementById(id);
+      el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // Password Validation
+    function checkPassword() {
+      const pwd = document.getElementById('pwdInput').value.trim().toLowerCase();
+      if (pwd === 'amsi' || pwd === 'mendhkiiii' || pwd === 'mendhki') {
+        nextPage(3);
+      } else {
+        alert('Wrong Password! Hint ko dhyan se padho Bbu 😜');
+      }
+    }
+
+    // Runaway No Button
+    function moveNoBtn() {
+      const btn = document.getElementById('noBtn');
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 100 - 50;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    // Confetti Celebration
+    function triggerConfetti() {
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+      alert("Yayyy! Best Friends Again! 🥳❤️");
+    }
+  </script>
+</body>
+</html>
