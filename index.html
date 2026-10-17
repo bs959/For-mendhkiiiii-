@@ -18,46 +18,51 @@
       align-items: center;
       padding: 15px;
       overflow-x: hidden;
+      position: relative;
     }
 
+    /* Card Box */
     .card {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       width: 100%;
       max-width: 450px;
       border-radius: 25px;
       padding: 25px;
-      box-shadow: 0 15px 35px rgba(238, 156, 167, 0.4);
+      box-shadow: 0 20px 40px rgba(238, 156, 167, 0.45);
       text-align: center;
       position: relative;
       display: none;
-      animation: fadeIn 0.5s ease-in-out;
+      z-index: 10;
+      animation: zoomIn 0.4s ease-out;
     }
 
     .card.active { display: block; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    h1, h2 { font-family: 'Fredoka One', cursive; color: #ff4757; margin-bottom: 15px; }
+    h1, h2 { font-family: 'Fredoka One', cursive; color: #ff4757; margin-bottom: 12px; }
     p { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 15px; }
 
-    /* Page 1 Styles */
-    .teddy-container { width: 120px; height: 120px; margin: 0 auto 10px; }
-    .teddy-svg { width: 100%; height: 100%; }
+    /* Page 1 Teddy & Frame */
+    .teddy-container { width: 110px; height: 110px; margin: 0 auto 10px; }
     .photo-frame {
-      width: 160px;
-      height: 200px;
+      width: 170px;
+      height: 210px;
       margin: 15px auto;
       border: 4px solid #ff4757;
-      border-radius: 15px;
+      border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
-      animation: pulse 2s infinite;
+      box-shadow: 0 10px 25px rgba(255, 71, 87, 0.3);
+      animation: heartbeat 2s infinite ease-in-out;
     }
     .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
 
     .promise-box {
       background: #fff0f3;
@@ -72,7 +77,7 @@
 
     /* Buttons */
     .btn {
-      background: #ff4757;
+      background: linear-gradient(45deg, #ff4757, #ff6b81);
       color: white;
       border: none;
       padding: 12px 25px;
@@ -80,15 +85,15 @@
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+      box-shadow: 0 5px 15px rgba(255, 71, 87, 0.35);
       transition: all 0.3s ease;
       margin-top: 10px;
     }
-    .btn:hover { transform: scale(1.05); background: #ff6b81; }
+    .btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 20px rgba(255, 71, 87, 0.45); }
 
-    /* Page 2 Password */
+    /* Password Input */
     .pwd-input {
-      width: 80%;
+      width: 85%;
       padding: 12px;
       border: 2px solid #ff6b81;
       border-radius: 20px;
@@ -96,15 +101,27 @@
       font-size: 16px;
       outline: none;
       margin-bottom: 10px;
+      transition: all 0.3s;
     }
+    .pwd-input:focus { border-color: #ff4757; box-shadow: 0 0 10px rgba(255, 71, 87, 0.3); }
     .hint { font-size: 12px; color: #888; font-style: italic; }
 
-    /* Page 3 Styles */
-    .gif-box { width: 180px; margin: 0 auto 15px; border-radius: 15px; overflow: hidden; }
-    .gif-box img { width: 100%; display: block; }
+    /* Custom GIF Display Box */
+    .gif-box {
+      width: 200px;
+      height: 180px;
+      margin: 0 auto 15px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 3px solid #ffb6c1;
+      box-shadow: 0 8px 20px rgba(255, 77, 109, 0.2);
+    }
+    .gif-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Apology Hidden Letter */
     .hidden-letter {
       display: none;
-      background: #fff5f6;
+      background: #fff0f3;
       border: 2px solid #ff4757;
       border-radius: 15px;
       padding: 15px;
@@ -113,28 +130,37 @@
       font-size: 13px;
       max-height: 250px;
       overflow-y: auto;
+      animation: fadeIn 0.4s ease;
     }
 
-    /* Floating Sad Emojis Effect */
-    .sad-emoji {
-      position: absolute;
-      font-size: 20px;
-      animation: floatUp 4s linear infinite;
-      opacity: 0.6;
+    /* Floating Sad Background Animation */
+    .bg-animation {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .float-item {
+      position: absolute;
+      bottom: -50px;
+      font-size: 22px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
     }
     @keyframes floatUp {
-      0% { transform: translateY(100%) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-500%) rotate(360deg); opacity: 0; }
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
     }
 
-    /* Page 4 Styles */
+    /* Stickers */
     .sticker { position: absolute; font-size: 24px; pointer-events: none; }
-    .sticker.top-left { top: 10px; left: 10px; }
-    .sticker.top-right { top: 10px; right: 10px; }
-    .sticker.bottom-left { bottom: 10px; left: 10px; }
-    .sticker.bottom-right { bottom: 10px; right: 10px; }
+    .sticker.top-left { top: 12px; left: 12px; }
+    .sticker.top-right { top: 12px; right: 12px; }
+    .sticker.bottom-left { bottom: 12px; left: 12px; }
+    .sticker.bottom-right { bottom: 12px; right: 12px; }
 
+    /* 12 Reasons List */
     .reasons-list {
       display: none;
       text-align: left;
@@ -144,16 +170,15 @@
       margin-top: 15px;
       max-height: 220px;
       overflow-y: auto;
+      animation: fadeIn 0.4s ease;
     }
     .reasons-list li { font-size: 13px; margin-bottom: 8px; list-style-type: none; }
 
-    .emoji-bar { font-size: 16px; margin: 10px 0; word-wrap: break-word; }
-
-    /* Page 5 Final */
+    .emoji-bar { font-size: 16px; margin: 12px 0; word-wrap: break-word; line-height: 1.8; }
     .follower-badge {
       background: #ff4757;
       color: white;
-      padding: 5px 15px;
+      padding: 6px 18px;
       border-radius: 20px;
       font-size: 12px;
       display: inline-block;
@@ -163,12 +188,21 @@
 </head>
 <body>
 
+  <!-- Floating Elements Layer -->
+  <div class="bg-animation">
+    <div class="float-item" style="left: 10%; animation-delay: 0s;">🥺</div>
+    <div class="float-item" style="left: 25%; animation-delay: 2s;">😭</div>
+    <div class="float-item" style="left: 45%; animation-delay: 1s;">💔</div>
+    <div class="float-item" style="left: 65%; animation-delay: 3s;">😔</div>
+    <div class="float-item" style="left: 85%; animation-delay: 1.5s;">🌧️</div>
+  </div>
+
   <!-- PAGE 1: Home Screen -->
   <div class="card active" id="page1">
     <h1>Sorry Mendhkiiii 🥺🐸</h1>
     
     <div class="teddy-container">
-      <svg class="teddy-svg" viewBox="0 0 100 100">
+      <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
         <circle cx="50" cy="55" r="30" fill="#d4a373"/>
         <circle cx="30" cy="30" r="12" fill="#d4a373"/>
         <circle cx="70" cy="30" r="12" fill="#d4a373"/>
@@ -184,7 +218,7 @@
     <p>Aanya, tumhari daant aur tumhara pyaar hi mera iklota nasha hai! Ab gussa chhod do na Bbu? 💔</p>
 
     <div class="photo-frame">
-      <img src="photo.jpg" alt="Mendhkiiii Photo">
+      <img src="photo.jpg" alt="Mendhkiiii Photo" onerror="this.onerror=null; this.src='Photo.jpg';">
     </div>
 
     <div class="promise-box">
@@ -212,20 +246,14 @@
     <button class="btn" onclick="checkPassword()">Unlock Page 🔓</button>
   </div>
 
-  <!-- PAGE 3: Apology Letter -->
+  <!-- PAGE 3: Apology Letter & Box -->
   <div class="card" id="page3">
-    <!-- Floating Sad Emojis -->
-    <div class="sad-emoji" style="left:10%; animation-delay:0s;">🥺</div>
-    <div class="sad-emoji" style="left:30%; animation-delay:1s;">😭</div>
-    <div class="sad-emoji" style="left:70%; animation-delay:2s;">💔</div>
-    <div class="sad-emoji" style="left:85%; animation-delay:1.5s;">😔</div>
-
     <div class="gif-box">
       <!-- Apology GIF -->
-      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2eHkxejlnNWV4MnRzbzQydXR2M201d3BvZm9tdnJuaXJubSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L9543X258567G/giphy.gif" alt="Sorry GIF">
+      <img src="sorry.gif" alt="I am sorry GIF">
     </div>
 
-    <p style="font-weight:bold; color:#ff4757;">I am so sorry Bbu 🥺💔</p>
+    <p style="font-weight:bold; color:#ff4757; font-size:16px;">I am so sorry Bbu 🥺💔</p>
 
     <button class="btn" onclick="toggleElement('apologyLetter')">🎁 Open Surprise Box</button>
 
@@ -245,14 +273,14 @@
 
   <!-- PAGE 4: What I Like About You -->
   <div class="card" id="page4">
-    <!-- Corner Stickers -->
     <div class="sticker top-left">💖</div>
     <div class="sticker top-right">🧸</div>
     <div class="sticker bottom-left">🌸</div>
     <div class="sticker bottom-right">💌</div>
 
     <div class="gif-box">
-      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2k0bnV3MXU4dzR3Nnc2eGN3aWVqZnRmbnA3OHJvcms2bnB3Y244YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kZqbBT64ECtjy/giphy.gif" alt="I Miss U GIF">
+      <!-- I Miss You GIF -->
+      <img src="missu.gif" alt="I miss u GIF">
     </div>
 
     <h2>You know what I like about you? ✨</h2>
@@ -286,12 +314,12 @@
     <button class="btn" onclick="nextPage(5)">Final Page ➡️</button>
   </div>
 
-  <!-- PAGE 5: Final Celebration -->
+  <!-- PAGE 5: Final Photo & Celebration -->
   <div class="card" id="page5">
     <div class="follower-badge">👑 #1 Favorite Person</div>
     
     <div class="photo-frame" style="width:180px; height:230px;">
-      <img src="photo.jpg" alt="Aanya Photo">
+      <img src="photo.jpg" alt="Aanya Photo" onerror="this.onerror=null; this.src='Photo.jpg';">
     </div>
 
     <h2>Ab maaan bhi jaoo me to apka Bbu hu na 😩😔</h2>
@@ -306,13 +334,13 @@
       document.getElementById('page' + pageNum).classList.add('active');
     }
 
-    // Toggle Box Visibility
+    // Toggle Visibility
     function toggleElement(id) {
       const el = document.getElementById(id);
       el.style.display = (el.style.display === 'block') ? 'none' : 'block';
     }
 
-    // Password Validation
+    // Password Check
     function checkPassword() {
       const pwd = document.getElementById('pwdInput').value.trim().toLowerCase();
       if (pwd === 'amsi' || pwd === 'mendhkiiii' || pwd === 'mendhki') {
@@ -330,7 +358,7 @@
       btn.style.transform = `translate(${x}px, ${y}px)`;
     }
 
-    // Confetti Celebration
+    // Confetti Effect
     function triggerConfetti() {
       confetti({
         particleCount: 150,
@@ -341,4 +369,5 @@
     }
   </script>
 </body>
-</html>
+          </html>
+      
